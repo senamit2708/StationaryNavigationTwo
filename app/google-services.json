@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "505857806283",
+    "firebase_url": "https://stationarynavigationtwo.firebaseio.com",
+    "project_id": "stationarynavigationtwo",
+    "storage_bucket": "stationarynavigationtwo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505857806283:android:05a1d8610c017ee8",
+        "android_client_info": {
+          "package_name": "com.example.senamit.stationarynavigationtwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505857806283-h84s3ifojpbo6dpnlbuhht9d55obq5ei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.senamit.stationarynavigationtwo",
+            "certificate_hash": "9083f9f0e906a6562a67f1b87c3b757daf59af76"
+          }
+        },
+        {
+          "client_id": "505857806283-fm8h0u1o8c2qpfkr3uabjd783ehgnqk9.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "505857806283-fm8h0u1o8c2qpfkr3uabjd783ehgnqk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtrtYOVpt-5XXi1Gvt0EijhhiCXKa778E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505857806283-fm8h0u1o8c2qpfkr3uabjd783ehgnqk9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
