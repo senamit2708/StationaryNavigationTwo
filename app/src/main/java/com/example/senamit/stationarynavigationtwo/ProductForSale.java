@@ -30,34 +30,34 @@ public class ProductForSale extends AppCompatActivity {
         txtEmail= findViewById(R.id.txtEmail);
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mFirebaseDatabaseReference.child("love u ").setValue("love u bro");
+//        mFirebaseDatabaseReference.child("love u ").setValue("love u bro");
+//
+//        Log.i(TAG, "reference is "+mFirebaseDatabaseReference);
+//        DatabaseReference mDatabase = mFirebaseDatabaseReference.child("Pencil");
+//        mDatabase.child("ThirdUser").setValue("HaHa");
+//
+//
+//        User users1 = new User("amit sen", "senamit7564@gmail.com");
+//        Log.i(TAG, "the username is "+users1.getUsername().toString());
+//        Log.i(TAG, "the email is "+users1.getEmailId());
+//        mFirebaseDatabaseReference.child("test").push().setValue(users1);
+//        User users2 = new User("user2", "user2.com");
+//        mFirebaseDatabaseReference.child("test").push().setValue(users2);
 
-        Log.i(TAG, "reference is "+mFirebaseDatabaseReference);
-        DatabaseReference mDatabase = mFirebaseDatabaseReference.child("Pencil");
-        mDatabase.child("ThirdUser").setValue("HaHa");
-
-
-        User users1 = new User("amit sen", "senamit7564@gmail.com");
-        Log.i(TAG, "the username is "+users1.getUsername().toString());
-        Log.i(TAG, "the email is "+users1.getEmailId());
-        mFirebaseDatabaseReference.child("test").push().setValue(users1);
-        User users2 = new User("user2", "user2.com");
-        mFirebaseDatabaseReference.child("test").push().setValue(users2);
-
-        mFirebaseDatabaseReference.child("pencil").child("ThirdUser").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                txtUserName.setText(value);
-                Log.d(TAG, "data loaded successfully, value is "+value);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                Log.w(TAG, "failed to load the data");
-            }
-        });
+//        mFirebaseDatabaseReference.child("pencil").child("ThirdUser").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String value = dataSnapshot.getValue(String.class);
+//                txtUserName.setText(value);
+//                Log.d(TAG, "data loaded successfully, value is "+value);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                Log.w(TAG, "failed to load the data");
+//            }
+//        });
 
 
     }

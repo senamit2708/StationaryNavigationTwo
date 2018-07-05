@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +22,7 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private TextView mUserName;
-    private Button mBtnLogOut;
     private  Button mBtnProductForSale;
-
 
 
     @Override
@@ -31,13 +31,11 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_main_first);
 
         mUserName = findViewById(R.id.txtUserName);
-        mBtnLogOut = findViewById(R.id.btn_logOut);
         mBtnProductForSale = findViewById(R.id.btn_productForSale);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-        mBtnLogOut.setOnClickListener(this);
         mBtnProductForSale.setOnClickListener(this);
 
         if (mFirebaseUser==null){
@@ -54,22 +52,41 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
         }
 
 
+
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_logOut:
-                mFirebaseAuth.signOut();
-                startActivity(new Intent(MainActivityFirst.this, SignInActivity.class));
-                break;
             case R.id.btn_productForSale:
                 startActivity(new Intent(MainActivityFirst.this, ProductForSale.class));
                 Log.i(TAG, "btn product for sale is clicked");
+                finish();
                 break;
             default:
                 Log.i(TAG, "no click button found");
 
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logOut:
+                mFirebaseAuth.signOut();
+                startActivity(new Intent(MainActivityFirst.this, SignInActivity.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
