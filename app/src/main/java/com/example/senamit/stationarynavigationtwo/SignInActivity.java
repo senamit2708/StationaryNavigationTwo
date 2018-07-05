@@ -96,25 +96,25 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         };
 
 
-        btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
 
-
-            }
-        });
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String code = mPhoneOtp.getText().toString();
-                if (TextUtils.isEmpty(code)) {
-                    mPhoneOtp.setError("Cannot be empty.");
-                    return;
-                }
-                verifyPhoneNumberWithCode(mVerificationId, code);
-            }
-        });
+//        btnSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String code = mPhoneOtp.getText().toString();
+//                if (TextUtils.isEmpty(code)) {
+//                    mPhoneOtp.setError("Cannot be empty.");
+//                    return;
+//                }
+//                verifyPhoneNumberWithCode(mVerificationId, code);
+//            }
+//        });
     }
 
     private void verifyPhoneNumberWithCode(String mVerificationId, String code) {
@@ -188,6 +188,20 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d(TAG, "phone number is "+phoneNumber);
                 startPhoneNumberVerification(phoneNumber);
                 break;
+            case R.id.btn_sign_in:
+                String code = mPhoneOtp.getText().toString();
+                if (TextUtils.isEmpty(code)) {
+                    mPhoneOtp.setError("Cannot be empty.");
+                    return;
+                }
+                verifyPhoneNumberWithCode(mVerificationId, code);
+                break;
+            case R.id.btn_resend_otp:
+                Log.i(TAG, "inside resend otp method");
+                break;
+            default:
+                Log.i(TAG, "no button found of such type");
+
         }
 
     }

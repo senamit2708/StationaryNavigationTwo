@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-public class MainActivityFirst extends AppCompatActivity {
+public class MainActivityFirst extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = MainActivityFirst.class.getSimpleName();
 
@@ -21,6 +21,7 @@ public class MainActivityFirst extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private TextView mUserName;
     private Button mBtnLogOut;
+    private  Button mBtnProductForSale;
 
 
 
@@ -31,9 +32,13 @@ public class MainActivityFirst extends AppCompatActivity {
 
         mUserName = findViewById(R.id.txtUserName);
         mBtnLogOut = findViewById(R.id.btn_logOut);
+        mBtnProductForSale = findViewById(R.id.btn_productForSale);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        mBtnLogOut.setOnClickListener(this);
+        mBtnProductForSale.setOnClickListener(this);
 
         if (mFirebaseUser==null){
             Log.i(TAG, "inside mFirebaseUser==null");
@@ -48,13 +53,23 @@ public class MainActivityFirst extends AppCompatActivity {
             mUserName.setText(mFirebaseUser.getDisplayName());
         }
 
-       mBtnLogOut.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               mFirebaseAuth.signOut();
-               startActivity(new Intent(MainActivityFirst.this, SignInActivity.class));
-           }
-       });
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_logOut:
+                mFirebaseAuth.signOut();
+                startActivity(new Intent(MainActivityFirst.this, SignInActivity.class));
+                break;
+            case R.id.btn_productForSale:
+                startActivity(new Intent(MainActivityFirst.this, ProductForSale.class));
+                Log.i(TAG, "btn product for sale is clicked");
+                break;
+            default:
+                Log.i(TAG, "no click button found");
+
+        }
     }
 }

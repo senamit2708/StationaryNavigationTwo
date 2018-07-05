@@ -11,18 +11,17 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".MainActivityFirst">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".SignInActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <activity android:name=".PhoneAuthActivity">
 
         </activity>
+        <activity android:name=".PhoneAuthActivity"></activity>
+        <activity android:name=".ProductForSale"></activity>
     </application>
 
 </manifest>
