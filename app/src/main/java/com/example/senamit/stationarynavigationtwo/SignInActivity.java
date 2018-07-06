@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.security.AuthProvider;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +37,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private DatabaseReference mDatabase;
 
     private EditText mPhoneNumberField;
     private EditText mPhoneOtp;
@@ -58,6 +61,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnResendOtp.setOnClickListener(this);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -95,26 +99,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
         };
 
-
-//        btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
-
-//        btnSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String code = mPhoneOtp.getText().toString();
-//                if (TextUtils.isEmpty(code)) {
-//                    mPhoneOtp.setError("Cannot be empty.");
-//                    return;
-//                }
-//                verifyPhoneNumberWithCode(mVerificationId, code);
-//            }
-//        });
     }
 
     private void verifyPhoneNumberWithCode(String mVerificationId, String code) {
@@ -132,7 +116,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             Log.d(TAG, "login credential successful");
                             FirebaseUser user = task.getResult().getUser();
                             Log.i(TAG, "the user is "+user);
-                            startActivity(new Intent(SignInActivity.this, MainActivityFirst.class));
+                            onAuthSuccess(user);
                         }
                        else {
                             Log.i(TAG, "login failed inside signInwithphoneauthcredential");
@@ -140,6 +124,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                     }
                 });
+    }
+
+    private void onAuthSuccess(FirebaseUser user) {
+        String phoneNumber = mPhoneNumberField.getText().toString();
+        writeNewUser(user.getUid(), phoneNumber);
+        startActivity(new Intent(SignInActivity.this, MainActivityFirst.class));
+
+    }
+
+    private void writeNewUser(String userId, String phoneNumber) {
+                User user = new User(phoneNumber);
+        mDatabase.child("users").child(userId).setValue(user);
     }
 
     private void startPhoneNumberVerification(String phoneNumber) {

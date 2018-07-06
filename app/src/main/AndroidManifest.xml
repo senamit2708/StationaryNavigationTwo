@@ -17,11 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity">
-
-        </activity>
-        <activity android:name=".PhoneAuthActivity"></activity>
-        <activity android:name=".ProductForSale"></activity>
+        <activity android:name=".SignInActivity"></activity>
+        <activity android:name=".PhoneAuthActivity" />
+        <activity android:name=".ProductForSale" />
+        <activity android:name=".ProductEntry"></activity>
     </application>
 
 </manifest>

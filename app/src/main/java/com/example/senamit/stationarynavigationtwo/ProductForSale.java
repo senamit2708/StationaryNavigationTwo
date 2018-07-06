@@ -1,9 +1,12 @@
 package com.example.senamit.stationarynavigationtwo;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +23,7 @@ public class ProductForSale extends AppCompatActivity {
 
    TextView txtUserName;
    TextView txtEmail;
+   FloatingActionButton fabButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class ProductForSale extends AppCompatActivity {
 
         txtUserName = findViewById(R.id.txtUserName);
         txtEmail= findViewById(R.id.txtEmail);
+        fabButton = findViewById(R.id.fab);
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 //        mFirebaseDatabaseReference.child("love u ").setValue("love u bro");
@@ -60,5 +65,12 @@ public class ProductForSale extends AppCompatActivity {
 //        });
 
 
+        fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductForSale.this, ProductEntry.class));
+                finish();
+            }
+        });
     }
 }
