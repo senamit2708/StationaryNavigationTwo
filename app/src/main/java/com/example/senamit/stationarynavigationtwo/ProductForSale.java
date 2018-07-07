@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,11 +19,13 @@ import com.google.firebase.database.ValueEventListener;
 public class ProductForSale extends AppCompatActivity {
 
     private static final String TAG = ProductForSale.class.getSimpleName();
+    private static final String PRODUCT_KEY = "product_key";
+    String key = null;
 
-   private DatabaseReference mFirebaseDatabaseReference;
+   private DatabaseReference mDatabase;
 
-   TextView txtUserName;
-   TextView txtEmail;
+   TextView txtProductName;
+   TextView txtProductNumber;
    FloatingActionButton fabButton;
 
     @Override
@@ -30,39 +33,39 @@ public class ProductForSale extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_for_sale);
 
-        txtUserName = findViewById(R.id.txtUserName);
-        txtEmail= findViewById(R.id.txtEmail);
+        txtProductName = findViewById(R.id.txtProductName);
+        txtProductNumber= findViewById(R.id.txtProductNumber);
         fabButton = findViewById(R.id.fab);
 
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-//        mFirebaseDatabaseReference.child("love u ").setValue("love u bro");
-//
-//        Log.i(TAG, "reference is "+mFirebaseDatabaseReference);
-//        DatabaseReference mDatabase = mFirebaseDatabaseReference.child("Pencil");
-//        mDatabase.child("ThirdUser").setValue("HaHa");
-//
-//
-//        User users1 = new User("amit sen", "senamit7564@gmail.com");
-//        Log.i(TAG, "the username is "+users1.getUsername().toString());
-//        Log.i(TAG, "the email is "+users1.getEmailId());
-//        mFirebaseDatabaseReference.child("test").push().setValue(users1);
-//        User users2 = new User("user2", "user2.com");
-//        mFirebaseDatabaseReference.child("test").push().setValue(users2);
+        String key = getIntent().getStringExtra(PRODUCT_KEY);
+        Log.i(TAG, "the key is "+key);
 
-//        mFirebaseDatabaseReference.child("pencil").child("ThirdUser").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String value = dataSnapshot.getValue(String.class);
-//                txtUserName.setText(value);
-//                Log.d(TAG, "data loaded successfully, value is "+value);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                Log.w(TAG, "failed to load the data");
-//            }
-//        });
+
+        if (key != null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("products").child(key);
+            Log.i(TAG, "the mdatabase ref is " + mDatabase);
+
+
+
+            ValueEventListener productListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.i(TAG, "inside onDataChange method");
+                    Product product = dataSnapshot.getValue(Product.class);
+                    txtProductName.setText(product.getProductName());
+                    txtProductNumber.setText(product.getProductNumber());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    Toast.makeText(ProductForSale.this, "failed to load product", Toast.LENGTH_SHORT).show();
+                }
+            };
+            mDatabase.addValueEventListener(productListener);
+        }
+
+
 
 
         fabButton.setOnClickListener(new View.OnClickListener() {

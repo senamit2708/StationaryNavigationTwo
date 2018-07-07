@@ -24,6 +24,7 @@ import java.util.Map;
 public class ProductEntry extends AppCompatActivity {
 
     private static final String TAG = ProductEntry.class.getSimpleName();
+    private static final String PRODUCT_KEY = "product_key";
 
     EditText mEdtProductNumber, mEdtProductName, mEdtProductPrice;
     Button mBtnSubmit;
@@ -80,13 +81,20 @@ public class ProductEntry extends AppCompatActivity {
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        writeNewPost(userId,productNumber, productName, productPrice );
+        String key = writeNewPost(userId,productNumber, productName, productPrice );
         setEditingEnable(true);
-        startActivity(new Intent(ProductEntry.this, ProductForSale.class));
+        showProduct(key);
+
+    }
+
+    private void showProduct(String key) {
+        Intent intent = new Intent(ProductEntry.this, ProductForSale.class);
+        intent.putExtra(PRODUCT_KEY, key);
+        startActivity(intent);
         finish();
     }
 
-    private void writeNewPost(String userId, String productNumber, String productName, String productPrice) {
+    private String writeNewPost(String userId, String productNumber, String productName, String productPrice) {
         String key = mDatabase.child("products").push().getKey();
         Product product = new Product(productName, productNumber, productPrice);
         Map<String, Object> productValues = product.toMap();
@@ -95,6 +103,7 @@ public class ProductEntry extends AppCompatActivity {
         //here we can use multiple put to the childUpdate to insert data in multiple nodes at a time.
         childUpdate.put("/products/"+key, productValues);
         mDatabase.updateChildren(childUpdate);
+        return key;
 
 
     }
