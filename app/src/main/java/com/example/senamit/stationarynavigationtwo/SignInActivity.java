@@ -1,9 +1,12 @@
 package com.example.senamit.stationarynavigationtwo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +47,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private Button btnPhoneNumber;
     private Button btnSubmit;
     private Button btnResendOtp;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnPhoneNumber = findViewById(R.id.btn_phone_number_enter);
         btnSubmit = findViewById(R.id.btn_sign_in);
         btnResendOtp = findViewById(R.id.btn_resend_otp);
+        context = this;
 
         btnPhoneNumber.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
@@ -158,6 +163,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(SignInActivity.this, "invalid phone number", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(!getContryCode(phoneNumber)){
+            return false;
+        }
         return true;
     }
 
@@ -180,7 +188,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
                 Log.i(TAG, "inside the else statement ");
-                String phoneNumber = mPhoneNumberField.getText().toString();
+                String phoneNumberField = mPhoneNumberField.getText().toString();
+                String countryCode = "+91-";
+                String phoneNumber = countryCode +phoneNumberField;
                 Log.d(TAG, "phone number is "+phoneNumber);
                 startPhoneNumberVerification(phoneNumber);
                 break;
@@ -199,6 +209,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 Log.i(TAG, "no button found of such type");
 
         }
+
+    }
+
+    private boolean getContryCode(String phoneNumber) {
+        String countryCode;
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(context.TELEPHONY_SERVICE);
+        String countryCodeValue = tm.getSimCountryIso();
+        if(countryCodeValue.equals("in")){
+            Log.i(TAG, "the country code is india");
+            return true;
+        }
+        return false;
 
     }
 }
