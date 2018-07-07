@@ -155,6 +155,19 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    private void resendVerificationCode(String phoneNumber, PhoneAuthProvider.ForceResendingToken token) {
+        Log.i(TAG, "inside resend verification code method");
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,
+                60,
+                TimeUnit.SECONDS,
+                this,
+                mCallback,
+                token);
+        mVerificationInProgress = true;
+
+    }
+
     private boolean validatePhoneNumber( ) {
         String phoneNumber = mPhoneNumberField.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)){
@@ -204,6 +217,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btn_resend_otp:
                 Log.i(TAG, "inside resend otp method");
+                resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
             default:
                 Log.i(TAG, "no button found of such type");
