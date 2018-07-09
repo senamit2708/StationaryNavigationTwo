@@ -1,14 +1,22 @@
 package com.example.senamit.stationarynavigationtwo;
 
 import android.arch.lifecycle.LiveData;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+
+
+import java.util.logging.LogRecord;
+
 
 /**
  * Created by senamit on 9/7/18.
@@ -20,6 +28,17 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
 
     private Query query;
     private MyValueEventListener listener = new MyValueEventListener();
+
+    private boolean listenerRemovePending = false;
+    private Handler handler = new Handler();
+    private final Runnable removeListener = new Runnable() {
+        @Override
+        public void run() {
+            query.removeEventListener(listener);
+            listenerRemovePending = false;
+
+        }
+    };
 
     public FirebaseQueryLiveData(Query query) {
         Log.i(TAG, "inside the constructor query "+query);
@@ -35,13 +54,21 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
     @Override
     protected void onActive() {
         super.onActive();
-        query.addValueEventListener(listener);
+        if (listenerRemovePending){
+            handler.removeCallbacks(removeListener);
+        }else {
+            query.addValueEventListener(listener);
+        }
+        listenerRemovePending= false;
+
     }
 
     @Override
     protected void onInactive() {
         super.onInactive();
-        query.removeEventListener(listener);
+//        query.removeEventListener(listener);
+        handler.postDelayed(removeListener, 2000);
+        listenerRemovePending=true;
     }
 
     private class MyValueEventListener implements ValueEventListener{
