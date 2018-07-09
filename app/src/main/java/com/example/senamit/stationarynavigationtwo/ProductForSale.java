@@ -64,17 +64,10 @@ public class ProductForSale extends AppCompatActivity {
             }
         });
 
-        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<DataSnapshot>() {
+        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<Product>() {
             @Override
-            public void onChanged(@Nullable DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    //currently we r getting only one product value, so its not like recycler view,
-                    // but we r geeting value one product...later we will get the list of product
-                    Product product = dataSnapshot.child("-LH--vB_4LZVAK_SS1J1").getValue(Product.class);
-                    mAdapter.setProduct(product);
-                }else {
-                    Log.i(TAG, "datasnapshot is empty ");
-                }
+            public void onChanged(@Nullable Product product) {
+                mAdapter.setProduct(product);
             }
         });
     }
