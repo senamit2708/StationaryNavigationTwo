@@ -67,7 +67,10 @@ public class ProductForSale extends AppCompatActivity {
         mViewModel.getDataSnapshotLiveData().observe(this, new Observer<Product>() {
             @Override
             public void onChanged(@Nullable Product product) {
-                mAdapter.setProduct(product);
+                if (product!= null){
+                    mAdapter.setProduct(product);
+                }
+
             }
         });
     }
