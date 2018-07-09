@@ -7,16 +7,12 @@
     android:orientation="vertical"
     tools:context="com.example.senamit.stationarynavigationtwo.ProductForSale">
 
-    <TextView
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_product"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtProductName"
-        android:text="username"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtProductNumber"
-        android:text="emial id"/>
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

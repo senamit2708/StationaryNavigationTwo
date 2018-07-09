@@ -1,10 +1,15 @@
 package com.example.senamit.stationarynavigationtwo;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class ProductForSale extends AppCompatActivity {
 
@@ -28,45 +35,26 @@ public class ProductForSale extends AppCompatActivity {
    TextView txtProductNumber;
    FloatingActionButton fabButton;
 
+   private RecyclerView mRecyclerView;
+   private RecyclerView.LayoutManager mLayoutManager;
+   private ProductForSaleAdapter mAdapter;
+   private ProductForSaleViewModel mViewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_for_sale);
 
-        txtProductName = findViewById(R.id.txtProductName);
-        txtProductNumber= findViewById(R.id.txtProductNumber);
+        Log.i(TAG, "the value of mViewModel is "+mViewModel);
+       mViewModel = ViewModelProviders.of(this).get(ProductForSaleViewModel.class);
+        Log.i(TAG, "the value of mViewModel is "+mViewModel);
+        mRecyclerView = findViewById(R.id.recycler_product);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ProductForSaleAdapter(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
         fabButton = findViewById(R.id.fab);
-
-        String key = getIntent().getStringExtra(PRODUCT_KEY);
-        Log.i(TAG, "the key is "+key);
-
-
-        if (key != null) {
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("products").child(key);
-            Log.i(TAG, "the mdatabase ref is " + mDatabase);
-
-
-
-            ValueEventListener productListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.i(TAG, "inside onDataChange method");
-                    Product product = dataSnapshot.getValue(Product.class);
-                    txtProductName.setText(product.getProductName());
-                    txtProductNumber.setText(product.getProductNumber());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    Toast.makeText(ProductForSale.this, "failed to load product", Toast.LENGTH_SHORT).show();
-                }
-            };
-            mDatabase.addValueEventListener(productListener);
-        }
-
-
-
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,5 +63,20 @@ public class ProductForSale extends AppCompatActivity {
                 finish();
             }
         });
+
+        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(@Nullable DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    //currently we r getting only one product value, so its not like recycler view,
+                    // but we r geeting value one product...later we will get the list of product
+                    Product product = dataSnapshot.child("-LH--vB_4LZVAK_SS1J1").getValue(Product.class);
+                    mAdapter.setProduct(product);
+                }else {
+                    Log.i(TAG, "datasnapshot is empty ");
+                }
+            }
+        });
     }
+
 }
