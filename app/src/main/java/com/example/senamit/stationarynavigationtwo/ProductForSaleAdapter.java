@@ -3,10 +3,13 @@ package com.example.senamit.stationarynavigationtwo;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Created by senamit on 7/7/18.
@@ -17,7 +20,7 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
     private static final String TAG = ProductForSaleAdapter.class.getSimpleName();
 
     private Context context;
-    private Product product;
+    private List<Product> product;
 
     public ProductForSaleAdapter(Context context) {
         this.context = context;
@@ -35,9 +38,9 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         if (product!= null){
-            holder.txtProductNumber.setText(product.getProductNumber());
-            holder.txtProductName.setText(product.getProductName());
-            holder.txtProductPrice.setText(product.getProductPrice());
+            holder.txtProductNumber.setText(product.get(position).getProductNumber());
+            holder.txtProductName.setText(product.get(position).getProductName());
+            holder.txtProductPrice.setText(product.get(position).getProductPrice());
         }else {
             holder.txtProductNumber.setText("no product found");
             holder.txtProductName.setText("no product found");
@@ -48,13 +51,13 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
     @Override
     public int getItemCount() {
         if (product!= null){
-            return 1;
+            return product.size();
         }else{
             return 0;
         }
     }
 
-    public void setProduct(Product mProduct){
+    public void setProduct(List<Product> mProduct){
         product = mProduct;
         notifyDataSetChanged();
     }

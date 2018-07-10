@@ -66,7 +66,6 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
     @Override
     protected void onInactive() {
         super.onInactive();
-//        query.removeEventListener(listener);
         handler.postDelayed(removeListener, 2000);
         listenerRemovePending=true;
     }
@@ -75,7 +74,6 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             setValue(dataSnapshot);
-
         }
 
         @Override

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductForSale extends AppCompatActivity {
 
@@ -64,15 +65,25 @@ public class ProductForSale extends AppCompatActivity {
             }
         });
 
-        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<Product>() {
+//        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<Product>() {
+//            @Override
+//            public void onChanged(@Nullable Product product) {
+//                if (product!= null){
+//                    mAdapter.setProduct(product);
+//                }
+//
+//            }
+//        });
+        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<List<Product>>() {
             @Override
-            public void onChanged(@Nullable Product product) {
-                if (product!= null){
-                    mAdapter.setProduct(product);
+            public void onChanged(@Nullable List<Product> products) {
+                if (products!= null){
+                    Log.i(TAG, "inside the onchanged method");
+                    mAdapter.setProduct(products);
                 }
-
             }
         });
+
     }
 
 }
