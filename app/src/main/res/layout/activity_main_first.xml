@@ -21,4 +21,10 @@
         android:text="Produt For sale"
         android:id="@+id/btn_productForSale"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload Page"
+        android:id="@+id/btnUploadPage"/>
+
 </LinearLayout>

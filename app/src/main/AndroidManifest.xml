@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.senamit.stationarynavigationtwo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,10 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity"></activity>
+        <activity android:name=".SignInActivity" />
         <activity android:name=".PhoneAuthActivity" />
         <activity android:name=".ProductForSale" />
-        <activity android:name=".ProductEntry"></activity>
+        <activity android:name=".ProductEntry" />
+        <activity android:name=".ProductImageUpload"></activity>
     </application>
 
 </manifest>

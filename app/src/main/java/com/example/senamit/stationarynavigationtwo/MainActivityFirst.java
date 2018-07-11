@@ -23,6 +23,7 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
     private FirebaseUser mFirebaseUser;
     private TextView mUserName;
     private  Button mBtnProductForSale;
+    private Button mBtnUploadPage;
 
 
     @Override
@@ -32,11 +33,14 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
 
         mUserName = findViewById(R.id.txtUserName);
         mBtnProductForSale = findViewById(R.id.btn_productForSale);
+        mBtnUploadPage = findViewById(R.id.btnUploadPage);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         mBtnProductForSale.setOnClickListener(this);
+        mBtnUploadPage.setOnClickListener(this);
+
 
         if (mFirebaseUser==null){
             Log.i(TAG, "inside mFirebaseUser==null");
@@ -62,6 +66,10 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
             case R.id.btn_productForSale:
                 startActivity(new Intent(MainActivityFirst.this, ProductForSale.class));
                 Log.i(TAG, "btn product for sale is clicked");
+                finish();
+                break;
+            case R.id.btnUploadPage:
+                startActivity(new Intent(MainActivityFirst.this, ProductImageUpload.class));
                 finish();
                 break;
             default:
