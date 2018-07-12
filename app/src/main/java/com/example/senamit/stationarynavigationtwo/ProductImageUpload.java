@@ -23,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,9 +36,12 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
 
     Button mBtnUpload;
     Button mBtnSelect;
+    Button mBtnDownload;
     ImageView mImage;
+    ImageView mImageDownload;
     //private Uri filePath;
     private Uri uri;
+    private Uri downloadImageUri;
     private StorageReference storageReference;
 
     @Override
@@ -46,10 +50,13 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_product_image_upload);
         mBtnUpload = findViewById(R.id.btnUpload);
         mBtnSelect = findViewById(R.id.btnSelect);
+        mBtnDownload = findViewById(R.id.btnDownload);
         mImage = findViewById(R.id.image);
+        mImageDownload = findViewById(R.id.imageDownload);
 
         mBtnSelect.setOnClickListener(this);
         mBtnUpload.setOnClickListener(this);
+        mBtnDownload.setOnClickListener(this);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -66,11 +73,19 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btnUpload:
                 uploadImage();
+                break;
+            case R.id.btnDownload:
+                downloadImage();
 
                 break;
             default:
                 Log.i(TAG, "no click button found");
         }
+    }
+
+    private void downloadImage() {
+        String url = downloadImageUri.toString();
+        Picasso.with(this).load(url).into(mImageDownload);
     }
 
     private void uploadImage() {
@@ -92,6 +107,7 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            downloadImageUri= uri;
                             Log.i(TAG, "the download link is "+uri);
                         }
                     });
