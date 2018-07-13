@@ -3,6 +3,7 @@ package com.example.senamit.stationarynavigationtwo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -14,17 +15,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.flags.IFlagProvider;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
@@ -42,6 +46,7 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
     //private Uri filePath;
     private Uri uri;
     private Uri downloadImageUri;
+    private String firebaseImageName;
     private StorageReference storageReference;
 
     @Override
@@ -76,16 +81,18 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btnDownload:
                 downloadImage();
-
                 break;
             default:
                 Log.i(TAG, "no click button found");
         }
     }
 
+
+
     private void downloadImage() {
         String url = downloadImageUri.toString();
-        Picasso.with(this).load(url).into(mImageDownload);
+//        Picasso.with(this).load(url).into(mImageDownload);
+        Glide.with(this).load(url).into(mImageDownload);
     }
 
     private void uploadImage() {
@@ -98,6 +105,7 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
+                    firebaseImageName = taskSnapshot.getMetadata().getName();
                     Toast.makeText(ProductImageUpload.this, "Upload successful", Toast.LENGTH_SHORT).show();
                   getUrlOfImage();
 
