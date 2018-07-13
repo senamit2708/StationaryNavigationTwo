@@ -34,7 +34,7 @@ public class ProductForSaleViewModel extends AndroidViewModel {
     private final FirebaseQueryLiveData liveData = new FirebaseQueryLiveData(PRODUCT_FOR_SALE);
 
     private final MediatorLiveData<List<Product>> productLiveData = new MediatorLiveData<>();
-    List<Product> productList = new ArrayList<>();
+
     public ProductForSaleViewModel(@NonNull Application application) {
         super(application);
         Log.i(TAG, "inside the constructor of view model ");
@@ -45,8 +45,7 @@ public class ProductForSaleViewModel extends AndroidViewModel {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-
-
+                            List<Product> productList = new ArrayList<>();
                             for (DataSnapshot productDataSnapshot : dataSnapshot.getChildren()){
                                 Product product = productDataSnapshot.getValue(Product.class);
                                 productList.add(product);
@@ -63,7 +62,7 @@ public class ProductForSaleViewModel extends AndroidViewModel {
 
     }
     public LiveData<List<Product>> getDataSnapshotLiveData(){
-        Log.i(TAG, "the value for activity is "+productList.toString());
+        Log.w(TAG, "the value for activity is "+productLiveData.toString());
         return productLiveData;
     }
 

@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -41,6 +44,8 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
             holder.txtProductNumber.setText(product.get(position).getProductNumber());
             holder.txtProductName.setText(product.get(position).getProductName());
             holder.txtProductPrice.setText(product.get(position).getProductPrice());
+            String imageUrl = product.get(position).getImageUrl();
+            Glide.with(context).load(imageUrl).into(holder.imageProduct);
         }else {
             holder.txtProductNumber.setText("no product found");
             holder.txtProductName.setText("no product found");
@@ -51,6 +56,7 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
     @Override
     public int getItemCount() {
         if (product!= null){
+            Log.i(TAG, "the size of product is "+product.size());
             return product.size();
         }else{
             return 0;
@@ -66,11 +72,13 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
         TextView txtProductNumber;
         TextView txtProductName;
         TextView txtProductPrice;
+        ImageView imageProduct;
         public ViewHolder(View itemView) {
             super(itemView);
             txtProductName = itemView.findViewById(R.id.txtProductName);
             txtProductNumber = itemView.findViewById(R.id.txtProductNumber);
             txtProductPrice = itemView.findViewById(R.id.txtProductPrice);
+            imageProduct = itemView.findViewById(R.id.imageProduct);
         }
     }
 }

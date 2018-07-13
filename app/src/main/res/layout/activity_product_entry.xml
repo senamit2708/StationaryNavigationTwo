@@ -7,6 +7,24 @@
     android:orientation="vertical"
     tools:context="com.example.senamit.stationarynavigationtwo.ProductEntry">
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:id="@+id/image"/>
+
+    <Button
+        android:id="@+id/btnSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="166dp"
+        android:text="Select Image" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="upload"
+        android:id="@+id/btnUpload"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

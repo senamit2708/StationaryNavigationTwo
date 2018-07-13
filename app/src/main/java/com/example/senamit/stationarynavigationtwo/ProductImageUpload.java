@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -64,6 +65,7 @@ public class ProductImageUpload extends AppCompatActivity implements View.OnClic
         mBtnDownload.setOnClickListener(this);
 
         storageReference = FirebaseStorage.getInstance().getReference();
+
 
 
     }

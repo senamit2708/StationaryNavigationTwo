@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class ProductForSale extends AppCompatActivity {
        mViewModel = ViewModelProviders.of(this).get(ProductForSaleViewModel.class);
         Log.i(TAG, "the value of mViewModel is "+mViewModel);
         mRecyclerView = findViewById(R.id.recycler_product);
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new GridLayoutManager(this, 2);
         mAdapter = new ProductForSaleAdapter(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -65,25 +66,18 @@ public class ProductForSale extends AppCompatActivity {
             }
         });
 
-//        mViewModel.getDataSnapshotLiveData().observe(this, new Observer<Product>() {
-//            @Override
-//            public void onChanged(@Nullable Product product) {
-//                if (product!= null){
-//                    mAdapter.setProduct(product);
-//                }
-//
-//            }
-//        });
         mViewModel.getDataSnapshotLiveData().observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(@Nullable List<Product> products) {
                 if (products!= null){
-                    Log.i(TAG, "inside the onchanged method");
+                    Log.i(TAG, "inside the onchanged method, the size of product "+products.size());
                     mAdapter.setProduct(products);
                 }
             }
         });
 
     }
+
+
 
 }

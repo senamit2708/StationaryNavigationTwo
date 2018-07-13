@@ -14,11 +14,13 @@ public class Product {
     String productName;
     String productNumber;
     String productPrice;
+    String imageUrl;
 
-    public Product(String productName, String productNumber, String productPrice) {
+    public Product(String productName, String productNumber, String productPrice, String imageUrl) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
+        this.imageUrl = imageUrl;
     }
 
     public Product() {
@@ -48,12 +50,21 @@ public class Product {
         this.productPrice = productPrice;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("productNumber", productNumber);
         result.put("productName", productName);
         result.put("productPrice", productPrice);
+        result.put("imageUrl", imageUrl);
 
         return result;
     }
