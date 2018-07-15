@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductForSale extends AppCompatActivity {
+public class ProductForSale extends AppCompatActivity implements View.OnClickListener, ProductForSaleAdapter.ProductItemClickListerner{
 
     private static final String TAG = ProductForSale.class.getSimpleName();
     private static final String PRODUCT_KEY = "product_key";
+    private static final String PRODUCT_SEND = "product_Send";
     String key = null;
 
    private DatabaseReference mDatabase;
@@ -36,6 +38,7 @@ public class ProductForSale extends AppCompatActivity {
    TextView txtProductName;
    TextView txtProductNumber;
    FloatingActionButton fabButton;
+
 
    private RecyclerView mRecyclerView;
    private RecyclerView.LayoutManager mLayoutManager;
@@ -53,10 +56,11 @@ public class ProductForSale extends AppCompatActivity {
         Log.i(TAG, "the value of mViewModel is "+mViewModel);
         mRecyclerView = findViewById(R.id.recycler_product);
         mLayoutManager = new GridLayoutManager(this, 2);
-        mAdapter = new ProductForSaleAdapter(this);
+        mAdapter = new ProductForSaleAdapter(this,this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         fabButton = findViewById(R.id.fab);
+
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,5 +83,15 @@ public class ProductForSale extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onProductItemClick(int clickedItemIndex, Product product) {
+        Log.i(TAG, "the product selected is "+product.getProductNumber());
+        Intent intent = new Intent(ProductForSale.this, ProductDescription.class);
+
+    }
 }

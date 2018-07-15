@@ -134,15 +134,16 @@ public class ProductEntry extends AppCompatActivity implements View.OnClickListe
     }
 
     private String writeNewPost(String userId, String productNumber, String productName, String productPrice) {
-        String key = mDatabase.child("products").push().getKey();
+//        String key = mDatabase.child("products").push().getKey();
+
         Product product = new Product(productName, productNumber, productPrice, downloadImageUri.toString());
         Map<String, Object> productValues = product.toMap();
 
         Map<String, Object> childUpdate = new HashMap<>();
         //here we can use multiple put to the childUpdate to insert data in multiple nodes at a time.
-        childUpdate.put("/products/"+key, productValues);
+        childUpdate.put("/products/"+productNumber, productValues);
         mDatabase.updateChildren(childUpdate);
-        return key;
+        return productNumber;
 
 
     }

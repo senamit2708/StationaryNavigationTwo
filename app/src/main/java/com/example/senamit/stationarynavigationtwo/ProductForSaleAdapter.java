@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,11 +23,14 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
 
     private static final String TAG = ProductForSaleAdapter.class.getSimpleName();
 
+    private ProductItemClickListerner mListener;
     private Context context;
     private List<Product> product;
 
-    public ProductForSaleAdapter(Context context) {
+    public ProductForSaleAdapter(Context context, ProductItemClickListerner listerner) {
         this.context = context;
+        mListener = listerner;
+
     }
 
     @NonNull
@@ -68,17 +72,31 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView txtProductNumber;
         TextView txtProductName;
         TextView txtProductPrice;
         ImageView imageProduct;
+        ImageButton btnFavorite;
         public ViewHolder(View itemView) {
             super(itemView);
             txtProductName = itemView.findViewById(R.id.txtProductName);
             txtProductNumber = itemView.findViewById(R.id.txtProductNumber);
             txtProductPrice = itemView.findViewById(R.id.txtProductPrice);
             imageProduct = itemView.findViewById(R.id.imageProduct);
+            btnFavorite = itemView.findViewById(R.id.btnFavorite);
+            itemView.setOnClickListener(this);
         }
+
+
+        @Override
+        public void onClick(View v) {
+            int clickedItemIndex= getAdapterPosition();
+            mListener.onProductItemClick(clickedItemIndex, product.get(clickedItemIndex));
+        }
+    }
+
+    public interface ProductItemClickListerner{
+        void onProductItemClick(int clickedItemIndex,Product product );
     }
 }
