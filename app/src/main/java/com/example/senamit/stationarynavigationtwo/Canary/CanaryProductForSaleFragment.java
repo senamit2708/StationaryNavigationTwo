@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -30,7 +31,7 @@ import java.util.List;
 
 import androidx.navigation.Navigation;
 
-public class CanaryProductForSaleFragment extends Fragment implements View.OnClickListener,ProductForSaleAdapter.ProductItemClickListerner {
+public class CanaryProductForSaleFragment extends Fragment implements ProductForSaleAdapter.ProductItemClickListerner {
     private static final String TAG = CanaryProductForSaleFragment.class.getSimpleName();
     private static final String PRODUCT_KEY = "product_key";
     private static final String PRODUCT_SEND = "product_Send";
@@ -43,6 +44,7 @@ public class CanaryProductForSaleFragment extends Fragment implements View.OnCli
     TextView txtProductName;
     TextView txtProductNumber;
     FloatingActionButton fabButton;
+    Button mBtnTest;
 
 
     private RecyclerView mRecyclerView;
@@ -60,7 +62,9 @@ public class CanaryProductForSaleFragment extends Fragment implements View.OnCli
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = container.getContext();
         View view = inflater.inflate(R.layout.activity_canary_product_for_sale_fragment, container, false);
+
         return view;
+
     }
 
     @Override
@@ -74,16 +78,13 @@ public class CanaryProductForSaleFragment extends Fragment implements View.OnCli
         mAdapter = new ProductForSaleAdapter(context, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
         fabButton = view.findViewById(R.id.fab);
 
 
-//        fabButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "inside the onClick listener of fab button");
-//                Navigation.createNavigateOnClickListener(R.id.action_canaryProductForSaleFragment_to_canaryProductEntryFragment, null);
-//            }
-//        });
+        fabButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_canaryProductForSaleFragment_to_canaryProductEntryFragment, null));
+
+
 
         mViewModel.getDataSnapshotLiveData().observe(this, new Observer<List<Product>>() {
             @Override
@@ -96,10 +97,6 @@ public class CanaryProductForSaleFragment extends Fragment implements View.OnCli
         });
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 
     @Override
     public void onProductItemClick(int clickedItemIndex, Product product) {
