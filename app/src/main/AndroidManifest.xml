@@ -25,7 +25,8 @@
         <activity android:name=".ProductForSale" />
         <activity android:name=".ProductEntry" />
         <activity android:name=".ProductImageUpload" />
-        <activity android:name=".ProductDescription"></activity>
+        <activity android:name=".ProductDescription" />
+        <activity android:name=".Canary.CanaryMainActivity" />
     </application>
 
 </manifest>
