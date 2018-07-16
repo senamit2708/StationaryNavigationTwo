@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android">
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:startDestination="@id/canaryProductForSaleFragment">
 
+    <fragment
+        android:id="@+id/canaryProductForSaleFragment"
+        android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryProductForSaleFragment"
+        android:label="CanaryProductForSaleFragment" >
+        <action
+            android:id="@+id/action_canaryProductForSaleFragment_to_canaryProductEntryFragment"
+            app:destination="@id/canaryProductEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/canaryProductEntryFragment"
+        android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryProductEntryFragment"
+        android:label="CanaryProductEntryFragment" />
 </navigation>

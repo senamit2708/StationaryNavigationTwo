@@ -47,6 +47,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.3.3'
     implementation 'com.github.bumptech.glide:glide:3.5.2'
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha03'
+    //navigation
+    implementation 'android.arch.navigation:navigation-fragment:' + rootProject.navigationVersion
+    implementation 'android.arch.navigation:navigation-ui:' + rootProject.navigationVersion
 
 
 }

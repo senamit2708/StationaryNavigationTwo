@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.senamit.stationarynavigationtwo.Canary.CanaryMainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -24,6 +25,7 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
     private TextView mUserName;
     private  Button mBtnProductForSale;
     private Button mBtnUploadPage;
+    private Button mBtnCanary;
 
 
     @Override
@@ -34,12 +36,14 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
         mUserName = findViewById(R.id.txtUserName);
         mBtnProductForSale = findViewById(R.id.btn_productForSale);
         mBtnUploadPage = findViewById(R.id.btnUploadPage);
+        mBtnCanary = findViewById(R.id.btnCanary);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         mBtnProductForSale.setOnClickListener(this);
         mBtnUploadPage.setOnClickListener(this);
+        mBtnCanary.setOnClickListener(this);
 
 
         if (mFirebaseUser==null){
@@ -72,6 +76,11 @@ public class MainActivityFirst extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(MainActivityFirst.this, ProductImageUpload.class));
                 finish();
                 break;
+            case R.id.btnCanary:
+                startActivity(new Intent(MainActivityFirst.this, CanaryMainActivity.class));
+                finish();
+                break;
+
             default:
                 Log.i(TAG, "no click button found");
 
