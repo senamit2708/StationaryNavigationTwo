@@ -15,19 +15,9 @@
     <fragment
         android:id="@+id/canaryProductEntryFragment"
         android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryProductEntryFragment"
-        android:label="CanaryProductEntryFragment" />
-    <fragment
-        android:id="@+id/fragmentOne"
-        android:name="com.example.senamit.stationarynavigationtwo.Canary.FragmentOne"
-        android:label="activity_fragment_one"
-        tools:layout="@layout/activity_fragment_one" >
+        android:label="CanaryProductEntryFragment" >
         <action
-            android:id="@+id/action_fragmentOne_to_fragmentTwo"
-            app:destination="@id/fragmentTwo" />
+            android:id="@+id/action_canaryProductEntryFragment_to_canaryProductForSaleFragment"
+            app:destination="@id/canaryProductForSaleFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/fragmentTwo"
-        android:name="com.example.senamit.stationarynavigationtwo.Canary.FragmentTwo"
-        android:label="activity_fragment_two"
-        tools:layout="@layout/activity_fragment_two" />
 </navigation>
