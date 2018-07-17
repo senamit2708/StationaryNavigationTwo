@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductForSale extends AppCompatActivity implements View.OnClickListener, ProductForSaleAdapter.ProductItemClickListerner{
+public class ProductForSale extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = ProductForSale.class.getSimpleName();
     private static final String PRODUCT_KEY = "product_key";
@@ -56,7 +56,7 @@ public class ProductForSale extends AppCompatActivity implements View.OnClickLis
         Log.i(TAG, "the value of mViewModel is "+mViewModel);
         mRecyclerView = findViewById(R.id.recycler_product);
         mLayoutManager = new GridLayoutManager(this, 2);
-        mAdapter = new ProductForSaleAdapter(this,this);
+        mAdapter = new ProductForSaleAdapter(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         fabButton = findViewById(R.id.fab);
@@ -88,10 +88,10 @@ public class ProductForSale extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    @Override
-    public void onProductItemClick(int clickedItemIndex, Product product) {
-        Log.i(TAG, "the product selected is "+product.getProductNumber());
-        Intent intent = new Intent(ProductForSale.this, ProductDescription.class);
-
-    }
+//    @Override
+//    public void onProductItemClick(int clickedItemIndex, Product product) {
+//        Log.i(TAG, "the product selected is "+product.getProductNumber());
+//        Intent intent = new Intent(ProductForSale.this, ProductDescription.class);
+//
+//    }
 }

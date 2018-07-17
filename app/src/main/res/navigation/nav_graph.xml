@@ -11,13 +11,17 @@
         <action
             android:id="@+id/action_canaryProductForSaleFragment_to_canaryProductEntryFragment"
             app:destination="@id/canaryProductEntryFragment" />
+        <action
+            android:id="@+id/action_canaryProductForSaleFragment_to_canaryProductDescription"
+            app:destination="@id/canaryProductDescription" />
     </fragment>
     <fragment
         android:id="@+id/canaryProductEntryFragment"
         android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryProductEntryFragment"
-        android:label="CanaryProductEntryFragment" >
-        <action
-            android:id="@+id/action_canaryProductEntryFragment_to_canaryProductForSaleFragment"
-            app:destination="@id/canaryProductForSaleFragment" />
-    </fragment>
+        android:label="CanaryProductEntryFragment" ></fragment>
+    <fragment
+        android:id="@+id/canaryProductDescription"
+        android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryProductDescription"
+        android:label="activity_canary_product_description"
+        tools:layout="@layout/activity_canary_product_description" />
 </navigation>

@@ -28,6 +28,8 @@ public class ProductForSaleViewModel extends AndroidViewModel {
 
     private static final String TAG = ProductForSaleViewModel.class.getSimpleName();
 
+    private String productNumber;
+
     private static final DatabaseReference PRODUCT_FOR_SALE = FirebaseDatabase
             .getInstance().getReference("/products");
 
@@ -67,5 +69,12 @@ public class ProductForSaleViewModel extends AndroidViewModel {
     }
 
 
+    public String getProductNumber() {
+        return productNumber;
+    }
 
+    public void setProductNumber(String productNumber) {
+        Log.i(TAG, "inside setProduct method "+productNumber);
+        this.productNumber = productNumber;
+    }
 }

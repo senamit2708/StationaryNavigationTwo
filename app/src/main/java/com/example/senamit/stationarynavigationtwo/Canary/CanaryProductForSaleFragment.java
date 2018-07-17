@@ -31,7 +31,7 @@ import java.util.List;
 
 import androidx.navigation.Navigation;
 
-public class CanaryProductForSaleFragment extends Fragment implements ProductForSaleAdapter.ProductItemClickListerner {
+public class CanaryProductForSaleFragment extends Fragment  {
     private static final String TAG = CanaryProductForSaleFragment.class.getSimpleName();
     private static final String PRODUCT_KEY = "product_key";
     private static final String PRODUCT_SEND = "product_Send";
@@ -75,7 +75,7 @@ public class CanaryProductForSaleFragment extends Fragment implements ProductFor
         Log.i(TAG, "the value of mViewModel is "+mViewModel);
         mRecyclerView = view.findViewById(R.id.recycler_product);
         mLayoutManager = new GridLayoutManager(context, 2);
-        mAdapter = new ProductForSaleAdapter(context, this);
+        mAdapter = new ProductForSaleAdapter(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -98,8 +98,14 @@ public class CanaryProductForSaleFragment extends Fragment implements ProductFor
     }
 
 
-    @Override
-    public void onProductItemClick(int clickedItemIndex, Product product) {
 
-    }
+//    @Override
+//    public void onProductItemClick(int clickedItemIndex, Product product) {
+//        Log.i(TAG,"inside the onproduct item click of fragment");
+//        String productNumber = product.getProductNumber();
+//        mViewModel.setProductNumber(productNumber);
+//        Navigation.createNavigateOnClickListener(R.id.action_canaryProductForSaleFragment_to_canaryProductDescription, null);
+//
+//
+//    }
 }

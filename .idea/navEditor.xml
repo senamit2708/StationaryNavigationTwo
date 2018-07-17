@@ -8,13 +8,25 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="canaryProductDescription">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1266" />
+                            <option name="y" value="-1486" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="canaryProductEntryFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-857" />
-                            <option name="y" value="-1604" />
+                            <option name="x" value="-1054" />
+                            <option name="y" value="-1783" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -25,12 +37,17 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1145" />
-                            <option name="y" value="-1668" />
+                            <option name="x" value="-1274" />
+                            <option name="y" value="-1788" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_canaryProductForSaleFragment_to_canaryProductDescription">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_canaryProductForSaleFragment_to_canaryProductEntryFragment">
                               <value>
                                 <LayoutPositions />
