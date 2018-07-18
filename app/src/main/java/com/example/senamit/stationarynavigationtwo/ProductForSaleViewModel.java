@@ -28,18 +28,40 @@ public class ProductForSaleViewModel extends AndroidViewModel {
 
     private static final String TAG = ProductForSaleViewModel.class.getSimpleName();
 
-    private String productNumber;
+    private static String mProductNumber;
 
     private static final DatabaseReference PRODUCT_FOR_SALE = FirebaseDatabase
             .getInstance().getReference("/products");
+    private static  DatabaseReference PRODUCT_FOR_SEARCH ;
 
-    private final FirebaseQueryLiveData liveData = new FirebaseQueryLiveData(PRODUCT_FOR_SALE);
+    private FirebaseQueryLiveData liveData ;
+    private FirebaseQueryLiveData productDescriptionLiveData;
 
-    private final MediatorLiveData<List<Product>> productLiveData = new MediatorLiveData<>();
+    private  MediatorLiveData<List<Product>> productLiveData;
+
+//    private MutableLiveData<Product> productDescription;
 
     public ProductForSaleViewModel(@NonNull Application application) {
         super(application);
         Log.i(TAG, "inside the constructor of view model ");
+
+
+    }
+    public LiveData<List<Product>> getDataSnapshotLiveData(){
+
+        if (productLiveData==null){
+            Log.i(TAG, "product live data is null");
+            productLiveData = new MediatorLiveData<>();
+            liveData = new FirebaseQueryLiveData(PRODUCT_FOR_SALE);
+
+            loadProductLiveData();
+        }
+        Log.w(TAG, "the value for activity is "+productLiveData.toString());
+        return productLiveData;
+    }
+
+    private void loadProductLiveData() {
+
         productLiveData.addSource(liveData, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(@Nullable final DataSnapshot dataSnapshot) {
@@ -51,6 +73,7 @@ public class ProductForSaleViewModel extends AndroidViewModel {
                             for (DataSnapshot productDataSnapshot : dataSnapshot.getChildren()){
                                 Product product = productDataSnapshot.getValue(Product.class);
                                 productList.add(product);
+                                Log.i(TAG, "inside loadproduct live data"+product);
 
                             }
                             productLiveData.postValue(productList);
@@ -61,20 +84,17 @@ public class ProductForSaleViewModel extends AndroidViewModel {
                 }
             }
         });
-
-    }
-    public LiveData<List<Product>> getDataSnapshotLiveData(){
-        Log.w(TAG, "the value for activity is "+productLiveData.toString());
-        return productLiveData;
     }
 
 
-    public String getProductNumber() {
-        return productNumber;
-    }
+    public LiveData<DataSnapshot> getProductMutableLiveData(String productNumber) {
+        if (productDescriptionLiveData==null){
+            mProductNumber=productNumber;
+            PRODUCT_FOR_SEARCH = FirebaseDatabase
+                    .getInstance().getReference("/products/"+ mProductNumber);
+            productDescriptionLiveData=new FirebaseQueryLiveData(PRODUCT_FOR_SEARCH);
+        }
 
-    public void setProductNumber(String productNumber) {
-        Log.i(TAG, "inside setProduct method "+productNumber);
-        this.productNumber = productNumber;
+        return productDescriptionLiveData;
     }
 }

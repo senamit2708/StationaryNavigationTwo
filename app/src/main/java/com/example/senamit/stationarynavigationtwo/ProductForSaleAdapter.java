@@ -27,8 +27,9 @@ import androidx.navigation.Navigation;
 public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAdapter.ViewHolder> {
 
     private static final String TAG = ProductForSaleAdapter.class.getSimpleName();
+    private static final String PRODUCT_INDEX = "product_index";
 
-//    private ProductItemClickListerner mListener;
+    //    private ProductItemClickListerner mListener;
     private Context context;
     private List<Product> product;
     String productId;
@@ -121,6 +122,7 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
             productId= product.get(clickedItemIndex).getProductNumber();
              bundle = new Bundle();
             bundle.putString(PRODUCT_KEY, productId);
+            bundle.putInt(PRODUCT_INDEX, clickedItemIndex);
             Log.i(TAG, "inside createonclicklistener recycler adapter, productId is"+productId);
             Navigation.findNavController(view).navigate(R.id.action_canaryProductForSaleFragment_to_canaryProductDescription, bundle);
         }
