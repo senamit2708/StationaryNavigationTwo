@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
 
     <ImageView
         android:id="@+id/imageProduct"
         android:layout_width="300dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="39dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtProductName"
+        android:layout_height="301dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,9 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginTop="39dp"
         android:text="Product Name"
-        app:layout_constraintBottom_toTopOf="@+id/txtProductPrice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageProduct" />
 
@@ -30,12 +28,10 @@
         android:id="@+id/txtProductPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="29dp"
         android:text="Product price"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtProductName"
+        app:layout_constraintStart_toStartOf="@+id/txtProductName"
         app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
 
     <Button
@@ -44,10 +40,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:layout_marginLeft="17dp"
+        android:layout_marginTop="79dp"
         android:layout_marginBottom="81dp"
         android:text="Add to Cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProductPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
+
+    <Button
+        android:id="@+id/btnBuyNow"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:text="Buy Now"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnAddToCart"
+        app:layout_constraintStart_toEndOf="@+id/btnAddToCart" />
 
 </android.support.constraint.ConstraintLayout>

@@ -23,5 +23,13 @@
         android:id="@+id/canaryProductDescription"
         android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryProductDescription"
         android:label="activity_canary_product_description"
-        tools:layout="@layout/activity_canary_product_description" />
+        tools:layout="@layout/activity_canary_product_description" >
+        <action
+            android:id="@+id/action_canaryProductDescription_to_canaryCartProduct"
+            app:destination="@id/canaryCartProduct" />
+    </fragment>
+    <fragment
+        android:id="@+id/canaryCartProduct"
+        android:name="com.example.senamit.stationarynavigationtwo.Canary.CanaryCartProduct"
+        android:label="CanaryCartProduct" />
 </navigation>

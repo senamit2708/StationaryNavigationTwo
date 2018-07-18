@@ -12,41 +12,56 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senamit.stationarynavigationtwo.Product;
 import com.example.senamit.stationarynavigationtwo.ProductForSaleViewModel;
 import com.example.senamit.stationarynavigationtwo.R;
+import com.example.senamit.stationarynavigationtwo.UserCart;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-public class CanaryProductDescription extends Fragment {
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.navigation.Navigation;
+
+public class CanaryProductDescription extends Fragment implements View.OnClickListener{
 
     private static final String TAG = CanaryProductDescription.class.getSimpleName();
     private static final String PRODUCT_KEY = "product_key";
     private static final String PRODUCT_INDEX = "product_index";
 
     private Context context;
-    private String productId;
+    private String mProductNumber;
     private int clickedItemIndex;
     private Product product;
+    private String userId;
 
     private TextView mTxtProductName;
     private TextView mTxtProductPrice;
     private ImageView mProductImage;
+    private Button mBtnAddToCart;
+    private Button mBtnBuyNow;
 
     private ProductForSaleViewModel mViewModel;
     private DatabaseReference mDatabase;
+    private DatabaseReference mUserDatabase;
     private LiveData<DataSnapshot> liveData;
+    private FirebaseUser mFirebaseUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        productId = getArguments().getString(PRODUCT_KEY);
+        mProductNumber = getArguments().getString(PRODUCT_KEY);
         clickedItemIndex = getArguments().getInt(PRODUCT_INDEX);
-        Log.i(TAG, "inside oncreate product description "+productId);
+        Log.i(TAG, "inside oncreate product description "+mProductNumber);
         Log.i(TAG, "inside oncreate product description "+clickedItemIndex);
     }
 
@@ -64,8 +79,20 @@ public class CanaryProductDescription extends Fragment {
         mTxtProductName = view.findViewById(R.id.txtProductName);
         mTxtProductPrice = view.findViewById(R.id.txtProductPrice);
         mProductImage = view.findViewById(R.id.imageProduct);
+        mBtnAddToCart = view.findViewById(R.id.btnAddToCart);
+        mBtnBuyNow = view.findViewById(R.id.btnBuyNow);
+
+        mBtnBuyNow.setOnClickListener(this);
+        mBtnAddToCart.setOnClickListener(this);
+
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = mFirebaseUser.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         mViewModel = ViewModelProviders.of(this).get(ProductForSaleViewModel.class);
-        liveData= mViewModel.getProductMutableLiveData(productId);
+
+        liveData= mViewModel.getProductMutableLiveData(mProductNumber);
+
         liveData.observe(this, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(@Nullable DataSnapshot dataSnapshot) {
@@ -81,5 +108,31 @@ public class CanaryProductDescription extends Fragment {
             }
         });
 
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnAddToCart:
+                pushProductToCart();
+//                Navigation.findNavController(view).navigate();
+                break;
+            case R.id.btnBuyNow:
+                Navigation.findNavController(view).navigate(R.id.action_canaryProductDescription_to_canaryCartProduct);
+
+            default:
+                Log.i(TAG, "Select any other click option");
+        }
+    }
+
+    private void pushProductToCart() {
+        UserCart cart = new UserCart(mProductNumber);
+        Map<String, Object> cartValue = cart.toMap();
+        Map<String, Object> childUpdate = new HashMap<>();
+        Log.i(TAG, "username is "+mFirebaseUser.getUid());
+        mUserDatabase = mDatabase.child("users").child(userId).child("cart");
+        childUpdate.put("/"+mProductNumber+"/", cartValue);
+        mUserDatabase.updateChildren(childUpdate);
     }
 }
