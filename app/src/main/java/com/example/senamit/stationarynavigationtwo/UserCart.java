@@ -11,9 +11,42 @@ public class UserCart {
 
     private String productNumber;
     private String date="26th Aug 2019";
+    private String productPrice;
 
     public UserCart(String productNumber) {
         this.productNumber = productNumber;
+    }
+
+    public UserCart(String productNumber, String productPrice) {
+        this.productNumber = productNumber;
+        this.productPrice = productPrice;
+    }
+
+    public UserCart() {
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 
     @Exclude

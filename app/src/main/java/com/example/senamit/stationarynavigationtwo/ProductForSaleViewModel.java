@@ -30,14 +30,18 @@ public class ProductForSaleViewModel extends AndroidViewModel {
 
     private static String mProductNumber;
 
+
     private static final DatabaseReference PRODUCT_FOR_SALE = FirebaseDatabase
             .getInstance().getReference("/products");
     private static  DatabaseReference PRODUCT_FOR_SEARCH ;
 
+
     private FirebaseQueryLiveData liveData ;
     private FirebaseQueryLiveData productDescriptionLiveData;
+    private FirebaseQueryLiveData cartProductLiveData;
 
     private  MediatorLiveData<List<Product>> productLiveData;
+    private MediatorLiveData<List<UserCart>> cartLiveData;
 
 //    private MutableLiveData<Product> productDescription;
 
@@ -97,4 +101,7 @@ public class ProductForSaleViewModel extends AndroidViewModel {
 
         return productDescriptionLiveData;
     }
+
+
+
 }

@@ -21,6 +21,7 @@ public class Product {
         this.productNumber = productNumber;
         this.productPrice = productPrice;
         this.imageUrl = imageUrl;
+
     }
 
     public Product() {
