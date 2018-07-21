@@ -20,9 +20,15 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     private Context context;
     private List<UserCart> cartProductList;
     private List<Product> productList;
+    private ButtonClickInterface btnClickinterface;
 
     public CartProductAdapter(Context context) {
         this.context = context;
+    }
+
+    public CartProductAdapter(Context context, ButtonClickInterface btnClickinterface) {
+        this.context = context;
+        this.btnClickinterface = btnClickinterface;
     }
 
     @NonNull
@@ -40,12 +46,10 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             holder.txtProductNumber.setText(cartProductList.get(position).getProductNumber());
             holder.txtProductPrice.setText(cartProductList.get(position).getProductPrice());
         }
-//        if (productList!= null){
-//            holder.txtProductPrice.setText(productList.get(position).getProductPrice());
-//        }
+
         else {
             Log.i(TAG, "the cartProductList is null");
-//            holder.txtProductNumber.setText("No Product found");
+            holder.txtProductNumber.setText("No Product found");
             holder.txtProductPrice.setText("price not loaded");
         }
 
@@ -67,13 +71,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         Log.i(TAG, "inside setCartProduct method");
     }
 
-//    public void setProduct(List<Product> productList) {
-//        this.productList = productList;
-//        notifyDataSetChanged();
-//        Log.i(TAG, "inside setProduct method");
-//    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
        ImageView imageProduct;
        TextView txtProductName;
        TextView txtProductNumber;
@@ -89,6 +87,26 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             txtProductPrice = itemView.findViewById(R.id.txtProductPrice);
             btnRemove = itemView.findViewById(R.id.btnRemove);
             btnSaveForLater = itemView.findViewById(R.id.btnSaveForLater);
+            btnRemove.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btnRemove:
+                    Log.i(TAG, "inside button click ");
+                    int position = getAdapterPosition();
+                    String productNumber = cartProductList.get(position).getProductNumber();
+                    btnClickinterface.funRemoveBtnClick(productNumber, position);
+                    break;
+                 default:
+                     Log.i(TAG, "select any other option");
+            }
+        }
+
     }
+    public interface ButtonClickInterface{
+        void funRemoveBtnClick(String productNumber, int position);
+    }
+
 }

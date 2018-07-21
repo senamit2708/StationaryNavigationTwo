@@ -23,24 +23,29 @@ public class ProductCartViewModel extends AndroidViewModel {
 
     private static final String TAG = ProductCartViewModel.class.getSimpleName();
 
-
+    private DatabaseReference mdataRef;
     private static DatabaseReference PRODUCT_IN_CART;
     private static DatabaseReference PRODUCT_DETAILS;
+    private static DatabaseReference PRODUCT_REMOVE;
     private FirebaseQueryLiveData cartFirebaseQueryLiveData ;
     private FirebaseQueryLiveData productFirebaseQueryLiveData;
 
     private  MediatorLiveData<List<UserCart>> cartLiveData;
     private MediatorLiveData<List<Product>>  productLiveData;
 
-    final List<UserCart> listProduct = new ArrayList<>();
+    private String mUserId;
+
+
 
 
     public ProductCartViewModel(@NonNull Application application) {
         super(application);
 
+
     }
 
     public LiveData<List<UserCart>> getCartData(String userId){
+        mUserId = userId;
         if (cartLiveData==null){
                    loadCartLiveData(userId);
         }
@@ -90,6 +95,7 @@ public class ProductCartViewModel extends AndroidViewModel {
         cartLiveData.addSource(cartFirebaseQueryLiveData, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(@Nullable final DataSnapshot dataSnapshot) {
+                 List<UserCart> listProduct = new ArrayList<>();
                 if (dataSnapshot!= null){
                             for (DataSnapshot cartProductDataSnapshot : dataSnapshot.getChildren()){
                                 final UserCart cartProduct = cartProductDataSnapshot.getValue(UserCart.class);
@@ -106,4 +112,10 @@ public class ProductCartViewModel extends AndroidViewModel {
 
     }
 
+    public void removeProductFromCart(String productNumber) {
+
+        mdataRef = FirebaseDatabase.getInstance().getReference();
+        mdataRef.child("users").child(mUserId).child("cart").child(productNumber).removeValue();
+
+    }
 }

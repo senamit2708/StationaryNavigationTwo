@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.senamit.stationarynavigationtwo.CartProductAdapter;
+import com.example.senamit.stationarynavigationtwo.CartProductAdapter.ButtonClickInterface;
 import com.example.senamit.stationarynavigationtwo.Product;
 import com.example.senamit.stationarynavigationtwo.ProductForSaleViewModel;
 import com.example.senamit.stationarynavigationtwo.R;
@@ -26,7 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import java.util.List;
 
 
-public class CanaryCartProduct extends Fragment {
+public class CanaryCartProduct extends Fragment implements ButtonClickInterface {
 
     private static final String TAG = CanaryCartProduct.class.getSimpleName();
 
@@ -66,7 +67,7 @@ public class CanaryCartProduct extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(ProductCartViewModel.class);
         mRecyclerView = view.findViewById(R.id.recycler_cart);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new CartProductAdapter(context);
+        mAdapter = new CartProductAdapter(context, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -75,23 +76,18 @@ public class CanaryCartProduct extends Fragment {
             @Override
             public void onChanged(@Nullable List<UserCart> userCarts) {
                 if (userCarts!= null){
-                    int size= userCarts.size();
-//                    if (userCarts.get(size).getProductPrice()!=null){
                         mAdapter.setCartProduct(userCarts);
-//                    }
-
                 }
             }
         });
 
-//        mViewModel.getProductData().observe(this, new Observer<List<Product>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Product> products) {
-//                if (products!= null){
-//                    mAdapter.setProduct(products);
-//                }
-//            }
-//        });
 
+    }
+
+
+    @Override
+    public void funRemoveBtnClick(String productNumber, int position) {
+        Log.i(TAG, "the product number fo product is  "+productNumber +"  position is "+ position);
+        mViewModel.removeProductFromCart(productNumber);
     }
 }
